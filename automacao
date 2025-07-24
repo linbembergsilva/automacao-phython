@@ -1,0 +1,182 @@
+import subprocess
+import time
+import pyautogui
+import os
+import getpass
+from datetime import datetime, timedelta
+from pyautogui import hotkey
+import shutil
+
+empresa = 1
+data_anterior = datetime.now() - timedelta(days=1)
+data = data_anterior.strftime('%d%m%Y')
+
+caminho = r"C:\Users\lindemberg.silva\Downloads\PROCFIT BUSINESS SUITE.EXE"
+
+# Abre o programa
+subprocess.Popen([caminho])
+
+# 3 segundos para o sitemas carregar
+time.sleep(3)
+
+# tab para informar a senha
+pyautogui.press("tab")
+pyautogui.press("tab")
+
+# Didita senha e clica em enter
+pyautogui.write("883730")
+pyautogui.press("tab")
+pyautogui.press("enter")
+time.sleep(3)
+
+# Abrir aba de favoritos
+pyautogui.click(x=100, y=780)
+time.sleep(3)
+
+# Abrir formulario geração ims
+pyautogui.click(x=100, y=305)
+time.sleep(3)
+
+
+# Cliar no botão para incluir um novo registro
+pyautogui.click(x=290, y=150)
+time.sleep(3)
+
+# Inseri A data inicial
+pyautogui.write(data)
+time.sleep(2)
+pyautogui.press("tab")
+
+# Inseri data final
+pyautogui.write(data)
+time.sleep(2)
+pyautogui.press("tab")
+
+# Inseri o codigo da empresa
+pyautogui.write(str(empresa))
+pyautogui.press("tab")
+time.sleep(2)
+
+# Confirma/salva a inclusão do novo registro---
+pyautogui.click(x=390, y=150)
+time.sleep(5)
+
+# Clicar no botão para gerar o arquivo IMS
+pyautogui.click(x=1300, y=150)
+time.sleep(5)
+
+# Clicar no botão OK
+pyautogui.click(x=1770, y=775)
+time.sleep(2)
+# Fechar o formulario
+pyautogui.click(x=1880, y=88)
+
+#    Processo de acessar sistema, realizar login, abrir formulario
+#    para gerar os arquvos IMS e sair do formulario finalizado
+
+
+#    Ja dentero do sistema, vamos iniciar o processo de entrar
+#    no formulario IMS estoques e gerar os arquvos
+
+# Abri formulario gerar arquivo ims estoque cofirmar fecha formulario
+pyautogui.click(x=100, y=390)
+time.sleep(3)
+
+# Cliar no botão para incluir um novo registro
+pyautogui.click(x=290, y=150)
+time.sleep(2)
+
+# Tab para ir para o campo data
+pyautogui.press("tab")
+pyautogui.press("tab")
+pyautogui.press("tab")
+
+# Inseri  data
+pyautogui.write(data)
+time.sleep(2)
+pyautogui.press("tab")
+
+# Inserir codigo da empresa
+pyautogui.write(str(empresa))
+pyautogui.press("tab")
+pyautogui.press("tab")
+
+# Comando para marcar o ckeckbox do campo processar(s/n)
+pyautogui.press("space")
+pyautogui.press("tab")
+pyautogui.press("tab")
+
+# Clicar no ctrl + X
+pyautogui.click(x=210, y=600)
+time.sleep(2)
+pyautogui.hotkey("ctrl", "x")
+time.sleep(5)
+
+# Clicar para selecionar todos os campos
+pyautogui.click(x=100, y=100)
+time.sleep(55)
+
+# Clicar para sair da pagina do campos selecionados
+pyautogui.click(x=65, y=100)
+time.sleep(5)
+
+# Confirma/salva a inclusão do novo registro
+pyautogui.click(x=390, y=150)
+time.sleep(5)
+
+# Clicar no botão para gerar o arquivo IMS
+pyautogui.click(x=1300, y=150)
+time.sleep(2)
+
+# clicar no botão OK
+pyautogui.click(x=1770, y=775)
+time.sleep(2)
+
+# fechar o formulario
+pyautogui.click(x=1880, y=88)
+
+# --Finalizado a geração de todos os arquivos---
+
+# ---Prcesso para abrir o diretorio de origem copiar os arquivos,
+#    acessar o diretorio de destino e color os arquivos para processados---.
+
+# ---Acessar o diretorio de origem, seleciona o primeiro arquivo e deleta ele---
+caminho_pasta = r"C:\ERPM\EDI\IMS"
+
+# ---Essa linha foi um pouco mais complicada de entender, pois ela lista todos arquivos da pasta
+#    verifica se tudo é arquivo e não tem subpastas---
+arquivos = [f for f in os.listdir(caminho_pasta) if os.path.isfile(os.path.join(caminho_pasta, f))]
+
+# ---Selecionar um arquivo especifico---
+primeiro_arquivo = os.path.join(caminho_pasta, arquivos[1])
+os.system(f'explorer /select,"{primeiro_arquivo}"')
+time.sleep(5)
+
+# ---Excluiu o arquivo que foi selecionado---
+os.remove(primeiro_arquivo)
+time.sleep(5)
+
+# ---Copia todos os arquivos da pasta---
+pyautogui.hotkey('ctrl', 'a')
+time.sleep(5)
+
+# ---Recorta todos os arquivos da pasta---
+pyautogui.hotkey("ctrl", "x")
+
+# ---Acesso o diretorio para colar os arquivos---
+caminho_pasta_ims = r"ftp://w9305@ftp.imshealth.com.br/"
+os.system(f'explorer "{caminho_pasta_ims}"')
+time.sleep(10)
+
+# ---Cola os arquivos---
+pyautogui.hotkey("ctrl", "v")
+
+# ---              FIM                ----
+
+
+
+
+
+
+
+
