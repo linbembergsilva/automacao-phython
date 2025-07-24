@@ -7,15 +7,18 @@ from datetime import datetime, timedelta
 from pyautogui import hotkey
 import shutil
 
+# Variavel da empresa que sera informada
 empresa = 1
+
+# Variavel da data do dia anterior
 data_anterior = datetime.now() - timedelta(days=1)
 data = data_anterior.strftime('%d%m%Y')
 
+# Variavel do caminho do .exe
 caminho = r"C:\Users\lindemberg.silva\Downloads\PROCFIT BUSINESS SUITE.EXE"
 
 # Abre o programa
 subprocess.Popen([caminho])
-
 # 3 segundos para o sitemas carregar
 time.sleep(3)
 
@@ -23,8 +26,8 @@ time.sleep(3)
 pyautogui.press("tab")
 pyautogui.press("tab")
 
-# Didita senha e clica em enter
-pyautogui.write("883730")
+# Digita senha e clica em enter
+pyautogui.write("#######")
 pyautogui.press("tab")
 pyautogui.press("enter")
 time.sleep(3)
@@ -91,7 +94,7 @@ pyautogui.press("tab")
 pyautogui.press("tab")
 pyautogui.press("tab")
 
-# Inseri  data
+# Inseri a data
 pyautogui.write(data)
 time.sleep(2)
 pyautogui.press("tab")
